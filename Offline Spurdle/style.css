@@ -1,0 +1,633 @@
+/* =========================================
+   1. GLOBAL RESET & LAYOUT
+   ========================================= */
+* { box-sizing: border-box; user-select: none; margin: 0; padding: 0; }
+body { background-color: #000; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
+#kiosk-container { width: 1080px; height: 1920px; background-color: #0b6dd6; position: relative; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+
+/* =========================================
+   2. DECORATIONS
+   ========================================= */
+.deco { position: absolute; z-index: 1; pointer-events: none; transition: opacity 0.3s ease; }
+.deco.hidden { display: none; }
+.deco.visible { display: block; }
+.star-top-left1 { top: 70px; left: 95px; width: 110px; }
+.lines-top-left { top: 130px; left: 0px; width: 150px; }
+
+.shape-top-right { top: 0; right: 0; width: 95px; }
+
+.star1-top-right { top: 390px; right: 90px; width: 93px; }
+.star-mid-left { top: 60%; left: 75px; width: 170px;height: 170px; }
+#game-flower { bottom: -8px; right: 0px; width: 326.45px; z-index: 5; }
+#game-flower1 { bottom: 0px; right: 0px;margin-right: 80px; width: 270.45px; z-index: 5; }
+
+#game-scribble { bottom: 28px; left: 0px; width: 130.94px; height: 210px; z-index: 5; }
+#three-circles { bottom: 0px; left: 0px;margin-left: 0px; width: 298.64px; height: 130px; ; z-index: 5; }
+#paper-plane1 { bottom: 0px;margin-right: 385px;margin-bottom: -10px; width: 760.21px; height: 350px; ; z-index: 5; }
+
+
+
+/* =========================================
+   3. SCREEN MANAGEMENT
+   ========================================= */
+.screen { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; flex-direction: column; align-items: center; z-index: 10; transition: opacity 0.3s ease; }
+.hidden { opacity: 0; pointer-events: none; z-index: 0; }
+.active { opacity: 1; z-index: 10; }
+
+/* =========================================
+   4. COMMON COMPONENTS (UPDATED ANIMATION)
+   ========================================= */
+.header-logo { margin-top: 150px; margin-bottom: 50px; }
+.main-logo { width: 500px; }
+.header-logo-small { margin-top: 100px; margin-bottom: 30px; }
+.small-logo { width: 350px; }
+
+.title-blocks { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center;
+}
+
+.block { 
+    background-color: #BEFFF0; 
+    border: 2px solid #000; 
+    border-radius: 33px; 
+    color: #000000; 
+    font-weight: 600; 
+    display: flex; justify-content: center; align-items: center; 
+    box-shadow: 8px 8px 0px #000; 
+}
+.main-title .block { width: 125px; height: 125px; font-size: 113px; }
+.small-title .block { width: 90px; height: 90px; font-size: 50px; }
+
+/* --- ZIG-ZAG PATTERN (Applies to ALL screens) --- */
+.title-blocks .block:nth-child(odd) { margin-top: 25px; }
+.title-blocks .block:nth-child(even) { margin-top: -25px; }
+
+/* --- BOUNCING ANIMATION --- */
+@keyframes bouncingBlock {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.title-blocks .block {
+    animation: bouncingBlock 1.5s infinite ease-in-out;
+}
+
+/* Staggered Delays */
+.title-blocks .block:nth-child(1) { animation-delay: 0.0s; }
+.title-blocks .block:nth-child(2) { animation-delay: 0.1s; }
+.title-blocks .block:nth-child(3) { animation-delay: 0.2s; }
+.title-blocks .block:nth-child(4) { animation-delay: 0.3s; }
+.title-blocks .block:nth-child(5) { animation-delay: 0.4s; }
+.title-blocks .block:nth-child(6) { animation-delay: 0.5s; }
+.title-blocks .block:nth-child(7) { animation-delay: 0.6s; }
+
+
+/* =========================================
+   5. SCREEN 1: TITLE SCREEN
+   ========================================= */
+#screen-title { 
+    justify-content: center; 
+    gap: 120px;
+}
+#screen-title .header-logo {
+    position: absolute; top: -57px; margin: 0; width: 585px;height: 410px; display: flex; justify-content: center;
+}
+/* =========================================
+   SCREEN 1 BUTTON STYLING (With Hover)
+   ========================================= */
+
+/* Normal State */
+.btn-pill { 
+    background-color: white; 
+    color: #0065D1; /* Blue text */
+    font-size: 45px; 
+    padding: 25px 100px; 
+    border: 4px solid #000; 
+    border-radius: 100px; 
+    box-shadow: 10px 10px 0px #000; 
+    cursor: pointer; 
+    margin-top: 40px; 
+    font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; 
+    
+    /* Smooth transition for hover effect */
+    transition: all 0.3s ease;
+}
+
+/* HOVER STATE (New Add kiya hai) */
+.btn-pill:hover {
+    background-color: #0065D1; /* Blue Background */
+    color: white; /* White Text */
+    border-color: #0065D1; /* Optional: Border bhi blue kar diya taake seamless lagay */
+}
+
+/* Active/Click State */
+.btn-pill:active { 
+    transform: translate(5px, 5px); 
+    box-shadow: 5px 5px 0px #000; 
+}
+.btn-pill:active { transform: translate(5px, 5px); box-shadow: 5px 5px 0px #000; }
+
+
+/* =========================================
+   6. SCREEN 2: HOW TO PLAY (FINAL FIX)
+   ========================================= */
+
+#screen-instructions { 
+    justify-content: flex-start; 
+}
+
+.shape-top-right1 { top: 0; right: 0; width: 95px; }
+.lines-top-left1 { bottom: -175px; left: 5px; width:200px; }
+.web { top: -70px; left: 0px; width: 255px;rotate: 10deg; }
+
+/* Container moves down to make room for the big tab */
+.how-to-container {
+    position: relative;
+    width: 800px;
+    margin-top: 150px; /* Increased margin */
+}
+
+/* 1. Main Card Shadow (Bottom Layer) */
+.how-to-shadow {
+    position: absolute;
+    top: 25px; left: 25px;
+    width: 100%; height: 100%;
+    background-color: #FBD3A8;
+    border: 3px solid #000;
+    border-radius: 30px;
+    z-index: 1;
+}
+
+/* 2. Tab Shadow (Layer behind Tab) */
+.how-to-tab-shadow {
+    position: absolute;
+    /* Shadow ko Tab ki position se match karke offset kiya */
+    top: -85px;  /* Tab top (-110) + offset (25) */
+    left: calc(50% - 35% + 25px); /* Tab left + offset */
+    width: 70%; 
+    height: 120px;
+    background-color: #FBD3A8;
+    border: 3px solid #000;
+    border-radius: 25px 25px 0 0;
+    z-index: 1; 
+}
+
+/* 3. Top Tab (The White Part) */
+.how-to-tab {
+    position: absolute;
+    /* Isay aur upar uthaya taake card ke andar na jaye */
+    top: -110px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 70%; 
+    height: 120px; /* Height barhai */
+    background-color: white;
+    border: 3px solid #000;
+    border-bottom: none; /* Merge with card */
+    border-radius: 25px 25px 0 0;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 2; /* Card ke upar */
+}
+
+.how-to-tab h2 {
+    font-family: "Podkova", serif; 
+    color: #0065D1; 
+    font-size: 60px; /* Font size barhaya */
+    margin: 0; 
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* 4. Main White Card */
+.how-to-card {
+    position: relative;
+    background-color: white;
+    border: 3px solid #000;
+    border-radius: 30px;
+    padding: 120px 50px; 
+    min-height: 900px; /* Height aur barhai */
+    z-index: 2; 
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+}
+
+/* Content Styling */
+.instruction-list { 
+    width: 90%;
+    display: flex; flex-direction: column; gap: 40px; 
+    margin-top: 20px;
+    margin-bottom: 40px; padding-left: 20px;
+}
+.inst-item { display: flex; align-items: center; gap: 30px; }
+
+.dot { width: 55px; height: 55px; border-radius: 50%; border: none; }
+.dot.green { background-color: #00C853; } 
+.dot.yellow { background-color: #FFD600; } 
+.dot.gray { background-color: #E0E0E0; }
+
+.inst-item p { font-size: 36px; font-weight: 700; color: #000; }
+
+.inst-text { text-align: center; margin-bottom: 30px; }
+.inst-text p { font-size: 38px; font-weight: 600; margin-bottom: 20px; color: #000; line-height: 1.3; }
+.blue-text { color: #0065D1; font-weight: 900; }
+
+.card-divider {
+    width: 100%;
+    border: none;
+    border-top: 3px solid #E0E0E0;
+    margin: 20px 0 40px 0;
+}
+
+/* START GAME BUTTON TEXT (With Hover) */
+.start-btn-text { 
+    font-size: 65px; 
+    color: #0065D1; /* Normal Blue */
+    font-weight: 900; 
+    text-transform: uppercase; 
+    cursor: pointer; 
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    
+    /* Smooth Color Change */
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect: Turns Black */
+.start-btn-text:hover {
+    color: #000000; 
+}
+
+
+/* Plane */
+.card-plane { 
+    position: absolute; 
+    bottom: -250px; right: -38px; 
+    width: 750px;
+    height: 350px; 
+    z-index: 10; 
+    transform: rotate(3deg); 
+}
+
+/* =========================================
+   ... REST OF CSS (Screens 3-7) ...
+   ... Paste this to replace the bottom half ...
+   ========================================= */
+
+   #screen-title .header-logo1 {
+    position: absolute; top: -57px; margin-top: -50px; width: 585px;height: 410px; display: flex; justify-content: center;
+}
+
+.star1-top-left2 { top: 70px; right: 195px;margin-top: 100px; width: 110px; }
+.lines-top-left2 { top: 130px; left: 0px; width: 150px; }
+
+.shape-top-right1 { top: 0; right: 0; width: 95px; }
+
+.star1-top-left3 { bottom: 370px; left: 75px;margin-top: 100px; width: 170px;height: 170px; }
+#game-flower1 { bottom: -8px; right: -80px; width: 326.45px; z-index: 5; }
+#game-flower2 { bottom: 0px; right: 0px;margin-right: 60px; width: 270.45px; z-index: 5; }
+
+
+.web1 { bottom: -40px; left: 0px; width: 255px;rotate: 270deg; }
+#paper-plane2 { bottom: 30px;margin-right: 385px; width: 760.21px; height: 350px; ; z-index: 5; }
+
+/* screem 4 */
+  #screen-title .header-logo3 {
+    position: absolute; top: 0px; margin-top: -50; width: 585px;height: 410px; display: flex; justify-content: center;
+}
+.main-logo3 { width: 500px;margin-top: -80px; }
+.star-top-left3 { top: 70px; left: 95px; width: 110px; }
+
+.lines-top-left3 { top: 130px; left: 0px; width: 150px; }
+
+.shape-top-right3 { top: 0; right: 0; width: 95px; }
+
+.star1-top-right3 { top: 390px; right: 90px; width: 93px; }
+.star1-top-right4 { bottom:50%; left: 25px; width: 140px;height: 140px; }
+#game-flower3 { bottom: -18px; right: 0px; width: 276.45px; z-index: 5; }
+#game-flower4 { bottom: -10px; right: 0px;margin-right: 80px; width: 230.45px; z-index: 5; }
+
+#game-scribble3 { bottom: 28px; left: 0px; width: 130.94px; height: 210px; z-index: 5; }
+#three-circles3 { bottom: 0px; left: 0px;margin-left: 0px; width: 298.64px; height: 130px; ; z-index: 5; }
+
+
+#screen-countdown { justify-content: flex-start; }
+.countdown-container { margin-top: 150px; display: flex; justify-content: center; align-items: center; }
+.countdown-card { width: 650px; height: 650px; background-color: white; border: 4px solid #000; border-radius: 60px; display: flex; justify-content: center; align-items: center; box-shadow: 30px 30px 0px #F5DEB3; }
+#countdown-number { font-size: 250px; font-weight: 900; color: #0065D1; font-family: 'Plus Jakarta Sans', sans-serif; }
+.plane-flying { position: absolute; bottom: 300px; left: 200px; width: 250px; transform: rotate(15deg); animation: fly 3s infinite ease-in-out; }
+@keyframes fly { 0% { transform: translate(0, 0) rotate(15deg); } 50% { transform: translate(20px, -20px) rotate(10deg); } 100% { transform: translate(0, 0) rotate(15deg); } }
+
+#screen-game { justify-content: flex-start; padding-top: 40px; position: relative; }
+.game-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 0px; width: 100%; position: relative; height: 250px; }
+
+
+.title-blocks1 { 
+    display: flex; 
+    margin-top: -50px; 
+    align-items: center;
+}
+
+.block { 
+    background-color: #BEFFF0; 
+    border: 2px solid #000; 
+    border-radius: 33px; 
+    color: #000000; 
+    font-weight: 600; 
+    display: flex; justify-content: center; align-items: center; 
+    box-shadow: 8px 8px 0px #000; 
+}
+.main-title .block { width: 125px; height: 125px; font-size: 113px; }
+.small-title .block { width: 110px; height: 110px; font-size: 70px; }
+
+/* --- ZIG-ZAG PATTERN (Applies to ALL screens) --- */
+.title-blocks1 .block:nth-child(odd) { margin-top: 25px; }
+.title-blocks1 .block:nth-child(even) { margin-top: -25px; }
+
+/* --- BOUNCING ANIMATION --- */
+@keyframes bouncingBlock {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.title-blocks1 .block {
+    animation: bouncingBlock 1.5s infinite ease-in-out;
+}
+
+/* =========================================
+   TIMER STYLING (UPDATED FOR SECONDS)
+   ========================================= */
+.timer-badge { 
+    position: absolute; 
+    top: 120px; left: 180px; 
+    width: 130px; height: 130px; 
+    border-radius: 50%; 
+    border: 4px solid #FDF1D6; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+    background: conic-gradient(#0065D1 360deg, #FDF1D6 0deg); 
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 20; 
+}
+
+.timer-face { 
+    width: 88%; height: 88%; 
+    background-color: #FDF1D6; 
+    border-radius: 50%; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; /* Center Content */
+    align-items: center; 
+    position: relative; 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1); 
+}
+
+/* Tick Marks (Lines inside timer) */
+.timer-face::before { content: ''; position: absolute; width: 2px; height: 100%; background: #000; opacity: 0.1; left: 50%; transform: translateX(-50%); }
+.timer-face::after { content: ''; position: absolute; width: 100%; height: 2px; background: #000; opacity: 0.1; top: 50%; transform: translateY(-50%); }
+
+/* Number Styling (Bada Font) */
+.timer-face span { 
+    font-size: 55px; /* Font size barha diya */
+    font-weight: 900; 
+    line-height: 1; 
+    color: #0065D1; /* Blue Color acha lagega */
+    z-index: 5; /* Lines ke upar */
+}
+ .timer-text-container { z-index: 2; text-align: center; }
+.timer-face span { font-size: 40px; font-weight: 800; line-height: 1; color: #000; }
+.timer-face small { display: block; font-size: 14px; font-weight: 700; color: #000; letter-spacing: 1px; margin-top: -5px; } 
+.game-area-row { width: 100%; display: flex; justify-content: center; margin-top: 70px; margin-bottom: 0px; }
+#grid-container { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); gap: 15px; padding: 10px; }
+.tile { width: 135px; height: 135px; background-color: white; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 70px; font-weight: 800; color: #000; box-shadow: 0 6px 0 #cfd8dc; }
+.tile.correct { background-color: #00C853; color: white; box-shadow: 0 6px 0 #009624; }
+.tile.present { background-color: #FFD600; color: black; box-shadow: 0 6px 0 #F9A825; }
+.tile.absent  { background-color: #78909C; color: white; box-shadow: 0 6px 0 #546E7A; }
+#keyboard-area { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 70px; padding-bottom: 120px; position: relative; z-index: 10; }
+.row { display: flex; gap: 10px; }
+.key { width: 88px; height: 110px; background: white; color: #0065D1; font-size: 40px; font-weight: 800; border-radius: 12px; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 0 #90CAF9; cursor: pointer; }
+.key:active { transform: translateY(4px); box-shadow: 0 2px 0 #90CAF9; }
+.key.correct { background-color: #00C853 !important; color: white !important; box-shadow: 0 5px 0 #009624 !important; }
+.key.present { background-color: #FFD600 !important; color: black !important; box-shadow: 0 5px 0 #F9A825 !important; }
+.key.absent { background-color: #78909C !important; color: white !important; box-shadow: 0 5px 0 #546E7A !important; }
+.key-wide { width: 130px; font-size: 26px; }
+
+.popup-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 100; display: flex; justify-content: center; align-items: center; }
+.popup-box { position: relative; width: 900px; background-color: #E6C9F5; padding: 60px; border: 8px solid #FFF; box-shadow: 25px 25px 0px #2C2138; outline: 20px solid #E6C9F5; display: flex; justify-content: center; align-items: center; text-align: center; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.popup-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 80px; color: #0D1321; line-height: 1.2; margin: 0; }
+.popup-lines { position: absolute; top: -50px; left: -20px; width: 100px; height: 50px; border-left: 5px solid #7FFFD4; transform: rotate(45deg); }
+.popup-lines::after { content: ''; position: absolute; left: 20px; top: 0; width: 5px; height: 100%; background: #7FFFD4; }
+.popup-star { position: absolute; bottom: -40px; right: -40px; width: 120px; filter: invert(47%) sepia(89%) saturate(1905%) hue-rotate(186deg) brightness(102%) contrast(101%); z-index: 101; }
+
+/* =========================================
+   COMMON CARD LAYOUT (For QR & Form)
+   ========================================= */
+.card-layout-container {
+    position: relative;
+    width: 800px;
+    margin-top: 120px;
+}
+
+.card-shadow-layer {
+    position: absolute;
+    top: 25px; left: 25px;
+    width: 100%; height: 100%;
+    background-color: #FBD3A8; /* Peach */
+    border: 3px solid #000;
+    border-radius: 30px;
+    z-index: 1;
+}
+
+.card-white-layer {
+    position: relative;
+    background-color: white;
+    border: 3px solid #000;
+    border-radius: 30px;
+    padding: 60px 40px;
+    z-index: 2;
+    min-height: 800px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+}
+
+/* Text Buttons (DONE / NEW GAME) */
+.action-text-btn {
+    font-size: 55px;
+    color: #0065D1;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.action-text-btn:active { transform: scale(0.95); }
+
+/* =========================================
+   SCREEN 3: QR CODE STYLING
+   ========================================= */
+.qr-heading {
+    font-size: 40px; color: #0065D1; font-weight: 700;
+    margin-bottom: 40px; line-height: 1.3;
+}
+.qr-img-style {
+    width: 350px;
+    margin-bottom: 40px;
+}
+.qr-subtext {
+    font-size: 30px; color: #000; font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* =========================================
+   SCREEN 4: FORM STYLING
+   ========================================= */
+.form-card-padding { justify-content: flex-start; padding-top: 100px; }
+
+.form-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 50px; color: #0065D1; font-weight: 800;
+    margin-bottom: 80px; text-transform: uppercase;
+}
+
+.custom-form {
+    width: 80%;
+    display: flex; flex-direction: column; gap: 60px;
+}
+
+/* NEW INPUT STYLE: Underline Only */
+.input-line {
+    width: 100%;
+    border: none;
+    border-bottom: 4px solid #0065D1; /* Blue Line */
+    background: transparent;
+    font-size: 40px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #000;
+    font-weight: 600;
+    padding: 10px 5px;
+    text-align: center;
+    outline: none;
+}
+.input-line::placeholder { color: #aaa; text-transform: uppercase; }
+
+/* =========================================
+   SCREEN 5: LEADERBOARD STYLING & SCROLLER
+   ========================================= */
+
+/* 1. Card Height */
+.lb-card-height { 
+    min-height: 947px; 
+    padding-top: 40px; 
+    /* Flex use kar rahe hain taake button neeche rahe */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+/* 2. SCROLLABLE CONTAINER (Ye Naya Hai) */
+.table-container { 
+    width: 100%; 
+    margin: 20px auto; 
+    /* Height fix ki taake scroll aye */
+    max-height: 700px; 
+    overflow-y: auto; /* Vertical Scroll ON */
+    overflow-x: hidden;
+    padding-right: 15px; /* Scrollbar ke liye thodi jagah */
+}
+
+/* --- CUSTOM SCROLLBAR DESIGN --- */
+.table-container::-webkit-scrollbar {
+    width: 12px; /* Scrollbar ki motai */
+}
+.table-container::-webkit-scrollbar-track {
+    background: #FDF1D6; /* Light Peach Track */
+    border-radius: 10px;
+    border: 2px solid #000;
+}
+.table-container::-webkit-scrollbar-thumb {
+    background: #0065D1; /* Blue Handle */
+    border-radius: 10px;
+    border: 2px solid #000;
+}
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #004ba0;
+}
+
+
+/* 3. TABLE STYLING (Tumhara purana code) */
+#lb-table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0 25px; 
+}
+
+.lb-row-container td {
+    border-bottom: 2px solid #E0E0E0;
+    padding-bottom: 15px;
+    vertical-align: middle;
+}
+
+/* =========================================
+   LEADERBOARD TROPHY STYLES
+   ========================================= */
+/* Default Avatar (Blue) - Already in your file */
+.lb-avatar {
+    width: 60px; height: 60px;
+    background-color: #0065D1;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    color: white; 
+    font-size: 30px; 
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* 1st Place - Gold */
+.lb-avatar.gold {
+    background-color: #FFD700; /* Gold Color */
+    color: #000; /* Text Black taake chamke */
+    font-size: 35px; /* Icon thoda bada */
+    box-shadow: 0 0 10px #FFD700; /* Glow Effect */
+}
+
+/* 2nd Place - Silver */
+.lb-avatar.silver {
+    background-color: #C0C0C0; /* Silver Color */
+    color: #000;
+    font-size: 35px;
+}
+
+/* 3rd Place - Bronze */
+.lb-avatar.bronze {
+    background-color: #CD7F32; /* Bronze Color */
+    color: white;
+    font-size: 35px;
+}
+
+/* 2. Position Number (1, 2, 3...) */
+.lb-pos {
+    font-size: 35px; font-weight: 900; color: #000;
+    width: 50px; text-align: center;
+}
+
+/* 3. Name */
+.lb-name {
+    font-size: 35px; font-weight: 800; color: #000;
+    text-transform: uppercase;
+    padding-left: 20px;
+    text-align: left;
+}
+
+/* 4. Score */
+.lb-score {
+    font-size: 35px; font-weight: 800; color: #000;
+    text-align: right;
+    padding-right: 20px;
+}
+#screen-instructions,  /* How to Play */
+#screen-countdown            /* countdown Screen */
+{
+    /* Upar Blue, Neeche White Fade */
+    background: linear-gradient(to bottom, #0065D1 45%, #FFFFFF 100%);
+    width: 100%;
+    height: 100%;
+}

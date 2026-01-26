@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1920, initial-scale=1.0">
+    <title>Spursol Spurdle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Podkova:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<div id="kiosk-container">
+    <div id="screen-title" class="screen active">
+        <img src="assets/star-white.png" class="deco star-top-left1">
+    <img src="assets/lines-black.png" class="deco lines-top-left">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right">
+    <img src="assets/star1-top-right.png" class="deco star1-top-right">
+    <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower1">
+    <img src="assets/paper-plane1.png" class="deco scribble-bottom-left" id="paper-plane1">
+    <img src="assets/three-circles.png" class="deco scribble-bottom-left" id="three-circles">
+    <img src="assets/scribble-bottom.png" class="deco scribble-bottom-left" id="game-scribble">
+        <div class="header-logo"> <img src="assets/logo-white.png" class="main-logo"> </div>
+        <div class="title-blocks main-title">
+            
+           <span class="block" onclick="downloadExcel()" style="cursor:help;">S</span>
+            <span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>        </div>
+        <button class="btn-pill" onclick="goToHowToPlay()">TAP TO PLAY</button>
+        <img src="assets/star-white.png" class="deco star-mid-left">
+    </div>
+
+  <div id="screen-instructions" class="screen hidden">
+   
+     <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower1">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right1">
+    <img src="assets/lines-black.png" class="deco lines-top-left1">
+    
+        
+        <div class="title-blocks small-title" style="margin-top: 120px; margin-bottom: 80px;">
+             <img src="assets/web.png" class="deco web">
+            <span class="block">S</span><span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>
+        </div>
+
+        <div class="how-to-container">
+            <div class="how-to-shadow"></div>
+            
+            <div class="how-to-tab-shadow"></div>
+
+            <div class="how-to-tab">
+                <h2>HOW TO PLAY!</h2>
+            </div>
+
+            <div class="how-to-card">
+                <div class="instruction-list">
+                    <div class="inst-item">
+                        <span class="dot green"></span>
+                        <p>Right letter, right place</p>
+                    </div>
+                    <div class="inst-item">
+                        <span class="dot yellow"></span>
+                        <p>Right letter, wrong place</p>
+                    </div>
+                    <div class="inst-item">
+                        <span class="dot gray"></span>
+                        <p>Letter not in word</p>
+                    </div>
+                </div>
+
+                <div class="inst-text">
+                    <p>You have <span class="blue-text">2 MINUTES</span> to guess<br>the word.</p>
+                    <p>Fastest Time ranks in<br><span class="blue-text">Top 5</span></p>
+                </div>
+
+                <hr class="card-divider">
+
+                <div class="start-btn-text" onclick="startCountdownSequence()">START GAME</div>
+            </div>
+
+            <img src="assets/paper-plane1.png" class="card-plane">
+        </div>
+    </div>
+
+    <div id="screen-countdown" class="screen hidden">
+        
+    <img src="assets/lines-black.png" class="deco lines-top-left2">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right1">
+    <img src="assets/star-white.png" class="deco star1-top-left2">
+    <img src="assets/star-white.png" class="deco star1-top-left3">
+    <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower1">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower2">
+    <img src="assets/paper-plane1.png" class="deco scribble-bottom-left" id="paper-plane2">
+    <img src="assets/web.png" class="deco web1">
+   
+        <div class="header-logo1"> <img src="assets/logo-white.png" class="main-logo"> </div>
+        <div class="title-blocks small-title">
+            <span class="block">S</span><span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>
+        </div>
+        <div class="countdown-container">
+            <div class="countdown-card"> <span id="countdown-number">03</span> </div>
+        </div>
+        
+    </div>
+
+    <div id="screen-game" class="screen hidden">
+         <img src="assets/star-white.png" class="deco star-top-left3">
+    <img src="assets/lines-black.png" class="deco lines-top-left3">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right3">
+    <img src="assets/star1-top-right.png" class="deco star1-top-right3">
+    <img src="assets/star-white.png" class="deco star1-top-right4">
+    <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower3">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower4">
+    <img src="assets/three-circles.png" class="deco scribble-bottom-left" id="three-circles3">
+    <img src="assets/scribble-bottom.png" class="deco scribble-bottom-left" id="game-scribble3">
+        <div class="header-logo3"> <img src="assets/logo-white.png" class="main-logo3"> </div>
+        
+        <div id="popup-success" class="popup-overlay hidden">
+            <div class="popup-box">
+                <div class="popup-lines"></div>
+                <img src="assets/star-white.png" class="popup-star">
+                <div class="popup-content"> <h2>You’re going<br>great! Keep going!</h2> </div>
+            </div>
+        </div>
+
+        <div id="popup-timeout" class="popup-overlay hidden">
+            <div class="popup-box">
+                <div class="popup-lines"></div>
+                <img src="assets/star-white.png" class="popup-star">
+                <div class="popup-content"> <h2 style="font-size: 100px;">UH OH!</h2> <h2 style="font-size: 80px;">Time’s Up!</h2> </div>
+            </div>
+        </div>
+
+        <div id="popup-gameover" class="popup-overlay hidden">
+            <div class="popup-box">
+                <div class="popup-lines"></div>
+                <img src="assets/star-white.png" class="popup-star">
+                <div class="popup-content"> 
+                    <h2 style="font-size: 100px;">GAME OVER!</h2> 
+                    <h2 style="font-size: 50px;">Good Try!</h2> 
+                </div>
+            </div>
+        </div>
+        <div class="game-header">
+            <div class="title-blocks1 small-title" style="transform: scale(0.9);">
+                <span class="block">S</span><span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>
+            </div>
+            <div class="timer-badge" id="timer-badge">
+                <div class="timer-face">
+                    <span id="timer-val">120</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area-row">
+            
+            <div id="grid-container"></div>
+        </div>
+        <div id="keyboard-area"></div>
+    </div>
+
+    <div id="screen-qr" class="screen hidden">
+        <img src="assets/star-white.png" class="deco star-top-left1">
+    <img src="assets/lines-black.png" class="deco lines-top-left">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right">
+    <img src="assets/star1-top-right.png" class="deco star1-top-right">
+    <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower1">
+    <img src="assets/paper-plane1.png" class="deco scribble-bottom-left" id="paper-plane1">
+    <img src="assets/three-circles.png" class="deco scribble-bottom-left" id="three-circles">
+    <img src="assets/scribble-bottom.png" class="deco scribble-bottom-left" id="game-scribble">
+         <div class="header-logo3"> <img src="assets/logo-white.png" class="main-logo3"> </div>
+        <div class="title-blocks1 small-title" style="transform: scale(0.9);">
+            <span class="block">S</span><span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>
+        </div>
+
+        <div class="card-layout-container">
+            <div class="card-shadow-layer"></div>
+            <div class="card-white-layer">
+                <p class="qr-heading">Impressive! You’re on the<br>path to becoming a spur!</p>
+                
+                <img src="assets/qr-code.png" class="qr-img-style" alt="QR Code">
+                
+                <p class="qr-subtext">Claim your spot by scanning the<br>QR Code and following our socials!</p>
+                
+                <hr class="card-divider">
+                
+                <div class="action-text-btn" onclick="switchScreen('screen-form')">DONE</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-form" class="screen hidden">
+        <img src="assets/star-white.png" class="deco star-top-left1">
+    <img src="assets/lines-black.png" class="deco lines-top-left">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right">
+    <img src="assets/star1-top-right.png" class="deco star1-top-right">
+    <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower1">
+    <img src="assets/paper-plane1.png" class="deco scribble-bottom-left" id="paper-plane1">
+    <img src="assets/three-circles.png" class="deco scribble-bottom-left" id="three-circles">
+    <img src="assets/scribble-bottom.png" class="deco scribble-bottom-left" id="game-scribble">
+         <div class="header-logo3"> <img src="assets/logo-white.png" class="main-logo3"> </div>
+        <div class="title-blocks1 small-title" style="transform: scale(0.9);">
+            <span class="block">S</span><span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>
+        </div>
+
+        <div class="card-layout-container">
+            <div class="card-shadow-layer"></div>
+            <div class="card-white-layer form-card-padding">
+                <h2 class="form-title">ENTER YOUR DETAILS</h2>
+
+                <form id="user-form" class="custom-form">
+                    <input type="text" id="fname" class="input-line" placeholder="FULL NAME" required autocomplete="off">
+                    <input type="email" id="uemail" class="input-line" placeholder="EMAIL" required autocomplete="off">
+                    
+                    <hr class="card-divider" style="margin-top: 50px;">
+                    
+                    <button type="submit" class="action-text-btn" style="background:none; border:none;">DONE</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+
+    <div id="screen-leaderboard" class="screen hidden">
+        <img src="assets/star-white.png" class="deco star-top-left1">
+    <img src="assets/lines-black.png" class="deco lines-top-left">
+    <img src="assets/shape-beige-right.png" class="deco shape-top-right">
+    <img src="assets/star1-top-right.png" class="deco star1-top-right">
+    <img src="assets/flower-bottom-right.png" class="deco flower-bottom-right" id="game-flower">
+    <img src="assets/flower.png" class="deco flower-bottom-right" id="game-flower1">
+    <img src="assets/paper-plane1.png" class="deco scribble-bottom-left" id="paper-plane1">
+    <img src="assets/three-circles.png" class="deco scribble-bottom-left" id="three-circles">
+    <img src="assets/scribble-bottom.png" class="deco scribble-bottom-left" id="game-scribble">
+         <div class="header-logo3"> <img src="assets/logo-white.png" class="main-logo3"> </div>
+        <div class="title-blocks1 small-title" style="transform: scale(0.9);">
+            <span class="block">S</span><span class="block">P</span><span class="block">U</span><span class="block">R</span><span class="block">D</span><span class="block">L</span><span class="block">E</span>
+        </div>
+
+        <div class="how-to-container" style="margin-top: 130px;">
+            <div class="how-to-shadow"></div>
+            <div class="how-to-tab-shadow"></div>
+            
+            <div class="how-to-tab">
+                <h2>LEADERBOARD</h2>
+            </div>
+
+            <div class="how-to-card lb-card-height">
+                <div class="table-container">
+                    <table id="lb-table">
+                        <tbody id="lb-body">
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="action-text-btn" onclick="resetGame()">NEW GAME</div>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Podkova:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
