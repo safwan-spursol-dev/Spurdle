@@ -73,6 +73,7 @@
                 <div class="inst-text">
                     <p>You have <span class="blue-text">2 MINUTES</span> to guess<br>the word.</p>
                     <p>Fastest Time ranks in<br><span class="blue-text">Top 5</span></p>
+                    <p>Hint:<br><span class="blue-text">Think of Spur Values</span></p>
                 </div>
 
                 <hr class="card-divider">
