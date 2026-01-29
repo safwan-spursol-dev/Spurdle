@@ -129,7 +129,10 @@
             <div class="popup-box">
                 <div class="popup-lines"></div>
                 <img src="assets/star-white.png" class="popup-star">
-                <div class="popup-content"> <h2 style="font-size: 100px;">UH OH!</h2> <h2 style="font-size: 80px;">Time’s Up!</h2> </div>
+                <div class="popup-content"> <h2 style="font-size: 100px;">UH OH!</h2> <h2 style="font-size: 80px;">Time’s Up!</h2>
+                <p id="go-correct-word1" style="margin-top: 20px; color: #333; font-size: 24px; font-weight: 600;">
+                </p>
+             </div>
             </div>
         </div>
 
@@ -139,7 +142,9 @@
                 <img src="assets/star-white.png" class="popup-star">
                 <div class="popup-content"> 
                     <h2 style="font-size: 100px;">GAME OVER!</h2> 
-                    <h2 style="font-size: 50px;">Good Try!</h2> 
+                    <h2 style="font-size: 50px;">Good Try!</h2>
+                    <p id="go-correct-word" style="margin-top: 20px; color: #333; font-size: 24px; font-weight: 600;">
+                </p> 
                 </div>
             </div>
         </div>

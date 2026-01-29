@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================================
     // 1. CONFIGURATION & SOUNDS
     // =========================================
-    const WORDS = ["SPURS", "AGILE", "CODES", "CLOUD", "STACK", "KIOSK", "SPEED", "DATA"]; 
+    const WORDS = ["THINK" , "TRUST" , "CHASE" , "ACTOR" , "SOLVE" , "VALUE" , "BUILD" , "DRIVE" , "FORCE"]; 
     const GAME_DURATION = 120; 
 
     // Sound Objects
@@ -294,9 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
         } else { setTimeout(loadNewWord, 1000); }
     }
 
-    function showTimeoutPopup() {
+   function showTimeoutPopup() {
         playSound(soundTimeout);
         const popup = document.getElementById('popup-timeout');
+         const wordDisplay = document.getElementById('go-correct-word1');
+        if(wordDisplay) {
+            wordDisplay.innerHTML = `The correct word was:<br><span style="color: #0065D1; font-size: 35px; font-weight: 800;">${currentWord}</span>`;
+        }
         if(popup) {
             popup.classList.remove('hidden');
             popup.style.display = 'flex';
@@ -307,14 +311,21 @@ document.addEventListener("DOMContentLoaded", () => {
         } else { endGame(); }
     }
 
-    function showGameOverPopup() {
+     function showGameOverPopup() {
         playSound(soundGameOver);
         const popup = document.getElementById('popup-gameover');
-        if(popup) {
+        const wordDisplay = document.getElementById('go-correct-word');
+        if(wordDisplay) {
+            wordDisplay.innerHTML = `The correct word was:<br><span style="color: #0065D1; font-size: 35px; font-weight: 800;">${currentWord}</span>`;
+        }
+      if(popup) {
             popup.classList.remove('hidden');
             popup.style.display = 'flex';
+            
+            // 3 Second baad screen change hogi
             setTimeout(() => {
                 popup.classList.add('hidden');
+                popup.style.display = ''; 
                 endGame();
             }, 3000);
         } else { endGame(); }

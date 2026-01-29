@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================================
     // 1. CONFIGURATION & SOUNDS
     // =========================================
-    const WORDS = ["TRUST", "TRUTH" , "HONOR" , "CLEAR" , "SPEAK" , "HEARD" , "OWNED" , "CRAFT" , "RAISE" , "SHARP" , "EXACT" , "PRIDE" , "IDEAL" , "START" , "DOING" , "DRIVE" , "ADAPT" , "LEARN" , "BRAVE" , "SOLVE" , "FOCUS" , "AWARE" , "CHECK" , "NOTES" , "VALUE" , "WORTH" , "PROVE" , "TRACK"]; 
+    const WORDS = ["THINK" , "TRUST" , "CHASE" , "ACTOR" , "SOLVE" , "VALUE" , "BUILD" , "DRIVE" , "FORCE"]; 
     const GAME_DURATION = 120; // 120 Seconds
 
     // Sound Objects
@@ -331,6 +331,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function showTimeoutPopup() {
         playSound(soundTimeout);
         const popup = document.getElementById('popup-timeout');
+        const wordDisplay = document.getElementById('go-correct-word1');
+    if(wordDisplay) {
+        // "currentWord" wo variable hai jisme sahi jawab store hota hai
+        wordDisplay.innerHTML = `The correct word was:<br><span style="color: #0065D1; font-size: 35px; font-weight: 800;">${currentWord}</span>`;
+    }
         if(popup) {
             popup.classList.remove('hidden');
             popup.style.display = 'flex';
@@ -345,16 +350,25 @@ document.addEventListener("DOMContentLoaded", () => {
     function showGameOverPopup() {
         playSound(soundGameOver);
         const popup = document.getElementById('popup-gameover');
-        if(popup) {
-            popup.classList.remove('hidden');
-            popup.style.display = 'flex';
-            popup.style.zIndex = '9999';
-            setTimeout(() => {
-                popup.classList.add('hidden');
-                endGame();
-            }, 3000);
-        } else { endGame(); }
+        const wordDisplay = document.getElementById('go-correct-word');
+    if(wordDisplay) {
+        // "currentWord" wo variable hai jisme sahi jawab store hota hai
+        wordDisplay.innerHTML = `The correct word was:<br><span style="color: #0065D1; font-size: 35px; font-weight: 800;">${currentWord}</span>`;
     }
+      if(popup) {
+        popup.classList.remove('hidden');
+        popup.style.display = 'flex';
+        popup.style.zIndex = '9999'; 
+        
+        setTimeout(() => {
+            popup.classList.add('hidden');
+            popup.style.display = 'none'; 
+            endGame();
+        }, 3000);
+    } else { 
+        endGame(); 
+    }
+}
 
     function endGame() {
         stopTicking();
